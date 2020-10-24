@@ -13,11 +13,11 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
-    extentions: ['.js'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      '@core': path.resolve(__dirname, 'src/core),
+      '@core': path.resolve(__dirname, 'src/core'),
     },
+    extensions: ['.js'],
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -36,4 +36,21 @@ module.exports = {
       filename: 'bundle.[hash].css',
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+      },
+    ],
+  },
 };
